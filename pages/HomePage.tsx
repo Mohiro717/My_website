@@ -56,11 +56,15 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchLatestPosts = async () => {
       try {
+        console.log('Fetching posts from Sanity...');
         const posts = await sanityService.getPosts();
+        console.log('Fetched posts:', posts);
+        console.log('Number of posts:', posts.length);
         setLatestPosts(posts.slice(0, 6));
         setLoading(false);
       } catch (error) {
         console.error('Error fetching latest posts:', error);
+        console.error('Error details:', error.message, error.statusCode);
         setLoading(false);
       }
     };
