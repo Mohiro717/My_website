@@ -1,27 +1,28 @@
 {
-  "name": "mohiro-website",
-  "version": "0.1.0",
+  "name": "mohiro-portfolio-blog",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "studio": "sanity dev --config sanity.config.studio.ts",
+    "studio:deploy": "sanity deploy --config sanity.config.studio.ts"
   },
   "dependencies": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.5.2"
+    "@sanity/client": "^7.11.1",
+    "@sanity/image-url": "^1.2.0",
+    "@sanity/vision": "^4.7.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.2",
+    "sanity": "^4.7.0",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.2",
-    "@eslint/eslintrc": "^3"
+    "@types/node": "^22.14.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
   }
 }
