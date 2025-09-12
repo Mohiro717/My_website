@@ -177,7 +177,9 @@ const HomePage: React.FC = () => {
                         <h3 className="text-xl font-bold mb-2 h-14 overflow-hidden text-main-text dark:text-gray-100">{post.title}</h3>
                         <p className="text-gray-600 dark:text-gray-400 mb-4 h-20 overflow-hidden">{post.excerpt}</p>
                         <div className="flex flex-wrap gap-2">
-                          {post.tags.slice(0, 2).map(tag => <Tag key={tag._id} color="pink">{tag.title}</Tag>)}
+                          {(post.tags ?? []).slice(0, 2).map(tag => (
+                            <Tag key={tag._id} color="pink">{tag.title}</Tag>
+                          ))}
                         </div>
                       </div>
                     </Card>

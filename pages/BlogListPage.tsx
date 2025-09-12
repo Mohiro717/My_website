@@ -44,10 +44,10 @@ const BlogListPage: React.FC = () => {
         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
       )
       .filter(post =>
-        selectedCategory ? post.categories.some(c => c._id === selectedCategory) : true
+        selectedCategory ? (post.categories ?? []).some(c => c._id === selectedCategory) : true
       )
       .filter(post =>
-        selectedTag ? post.tags.some(t => t._id === selectedTag) : true
+        selectedTag ? (post.tags ?? []).some(t => t._id === selectedTag) : true
       );
   }, [posts, searchTerm, selectedCategory, selectedTag]);
 
@@ -97,13 +97,13 @@ const BlogListPage: React.FC = () => {
               <div className="p-6 flex flex-col h-64">
                 <div className="flex-grow">
                     <div className="flex flex-wrap gap-2 mb-2">
-                        {post.categories.map(cat => <Tag key={cat._id}>{cat.title}</Tag>)}
+                        {(post.categories ?? []).map(cat => <Tag key={cat._id}>{cat.title}</Tag>)}
                     </div>
                     <h3 className="text-xl font-bold mb-2 h-14 overflow-hidden">{post.title}</h3>
                     <p className="text-gray-600 mb-4 h-20 overflow-hidden text-sm">{post.excerpt}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">
-                    {post.tags.slice(0, 3).map(tag => <Tag key={tag._id} color="pink">{tag.title}</Tag>)}
+                    {(post.tags ?? []).slice(0, 3).map(tag => <Tag key={tag._id} color="pink">{tag.title}</Tag>)}
                 </div>
               </div>
             </Card>

@@ -69,8 +69,12 @@ const BlogPostPage: React.FC = () => {
           <span>Published on {new Date(post.publishedAt).toLocaleDateString()} by {post.author.name}</span>
         </div>
         <div className="flex justify-center flex-wrap gap-2 mt-4">
-          {post.categories.map(cat => <Tag key={cat._id} onClick={() => navigate(`/blog/category/${cat.title.toLowerCase()}`)}>{cat.title}</Tag>)}
-          {post.tags.map(tag => <Tag key={tag._id} color="pink" onClick={() => navigate(`/blog/tag/${tag.title.toLowerCase()}`)}>{tag.title}</Tag>)}
+          {(post.categories ?? []).map(cat => (
+            <Tag key={cat._id} onClick={() => navigate(`/blog/category/${cat.title.toLowerCase()}`)}>{cat.title}</Tag>
+          ))}
+          {(post.tags ?? []).map(tag => (
+            <Tag key={tag._id} color="pink" onClick={() => navigate(`/blog/tag/${tag.title.toLowerCase()}`)}>{tag.title}</Tag>
+          ))}
         </div>
       </header>
       
