@@ -1,13 +1,28 @@
 import { createClient } from '@sanity/client'
 
-console.log('Sanity Client Config:')
-console.log('PROJECT_ID:', import.meta.env.VITE_SANITY_PROJECT_ID || 'iqc6wbsd')
-console.log('DATASET:', import.meta.env.VITE_SANITY_DATASET || 'production')
+const normalize = (v: unknown): string => (typeof v === 'string' ? v.trim() : '')
+const isValidId = (v: string): boolean => /^[a-z0-9-]+$/i.test(v)
+
+// Read from Vite env at build/runtime
+const rawProjectId = (import.meta as any)?.env?.VITE_SANITY_PROJECT_ID
+const rawDataset = (import.meta as any)?.env?.VITE_SANITY_DATASET
+
+const normalizedProjectId = normalize(rawProjectId)
+const normalizedDataset = normalize(rawDataset)
+
+const projectId = isValidId(normalizedProjectId) ? normalizedProjectId.toLowerCase() : 'iqc6wbsd'
+const dataset = isValidId(normalizedDataset) ? normalizedDataset : 'production'
+
+try {
+  // Debug in browser console only
+  console.log('Sanity Client Config:', { projectId, dataset })
+} catch {}
 
 export const sanityClient = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'iqc6wbsd',
-  dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
+  projectId,
+  dataset,
   apiVersion: '2024-01-01',
-  useCdn: false, // Disable CDN for CORS compatibility
-  perspective: 'published'
+  useCdn: true,
+  perspective: 'published',
 })
+
