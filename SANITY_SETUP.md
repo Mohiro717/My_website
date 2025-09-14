@@ -44,6 +44,20 @@ GEMINI_API_KEY=your-gemini-api-key
 プロジェクト作成後、以下のURLでアクセス可能：
 `https://your-project-id.sanity.studio/`
 
+## 重要: 環境変数の必須化（Studio/CLI）
+
+- `sanity.config.ts` / `sanity.config.studio.ts` / `sanity.cli.ts` では、`VITE_SANITY_PROJECT_ID` のフォールバックを廃止しています。
+- `VITE_SANITY_PROJECT_ID` が未設定の場合、Studio/CLI 起動時にエラーとなります。必ず環境変数を設定してください。
+- ローカルで Studio を起動する例（シェルが `.env.local` を自動読込しない場合）:
+  - macOS/Linux: `VITE_SANITY_PROJECT_ID=YOUR_ID VITE_SANITY_DATASET=production npm run studio`
+  - PowerShell: `$env:VITE_SANITY_PROJECT_ID='YOUR_ID'; $env:VITE_SANITY_DATASET='production'; npm run studio`
+
+## Service Worker の挙動（開発/プレビュー）
+
+- 開発（localhost）および Vercel Preview（ホスト名に `-git-` を含む）では SW を登録しません。
+- さらに、過去に登録済みの SW があれば自動的に unregister し、`mohiro-` から始まるキャッシュを削除します。
+- 本番のみ SW を登録します。
+
 ### データ構造
 以下のコンテンツタイプが利用可能：
 

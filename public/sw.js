@@ -3,6 +3,10 @@ const STATIC_CACHE_NAME = `mohiro-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE_NAME = `mohiro-dynamic-${CACHE_VERSION}`;
 const IMAGE_CACHE_NAME = `mohiro-images-${CACHE_VERSION}`;
 
+// Disable SW behavior on localhost and Vercel preview to avoid interfering with Vite HMR
+const DEV_HOSTS = ['localhost', '127.0.0.1', '::1'];
+const IS_DEV_SW = DEV_HOSTS.includes(self.location.hostname) || self.location.hostname.includes('-git-');
+
 const IMAGE_CACHE_TIME = 24 * 60 * 60 * 1000; // 24 hours
 
 // Pre-cache static assets
@@ -25,8 +29,7 @@ const CACHE_STRATEGIES = {
   // Images - Cache first with expiry
   images: [
     /images\.unsplash\.com/,
-    /picsum\.photos/,
-    /cdn\.sanity\.io/
+    /picsum\.photos/
   ],
   // API and dynamic content - Network first  
   dynamic: [
@@ -35,49 +38,66 @@ const CACHE_STRATEGIES = {
   ]
 };
 
-// Install event - cache static assets
-self.addEventListener('install', (event) => {
-  console.log('[SW] Installing PWA Service Worker...');
-  
-  event.waitUntil(
-    Promise.all([
-      caches.open(STATIC_CACHE_NAME)
-        .then(cache => {
-          console.log('[SW] Caching static assets');
-          return cache.addAll(STATIC_ASSETS);
-        }),
-      self.skipWaiting()
-    ])
-  );
-});
+if (IS_DEV_SW) {
+  // Dev/Preview: immediately unregister and clear our caches; do not install fetch handlers
+  self.addEventListener('install', (event) => {
+    event.waitUntil(self.skipWaiting());
+  });
+  self.addEventListener('activate', (event) => {
+    event.waitUntil((async () => {
+      try { await self.registration.unregister(); } catch {}
+      try {
+        const keys = await caches.keys();
+        await Promise.all(keys.filter(k => k.startsWith('mohiro-')).map(k => caches.delete(k)));
+      } catch {}
+      try { await self.clients.claim(); } catch {}
+    })());
+  });
+} else {
+  // Install event - cache static assets
+  self.addEventListener('install', (event) => {
+    console.log('[SW] Installing PWA Service Worker...');
+    
+    event.waitUntil(
+      Promise.all([
+        caches.open(STATIC_CACHE_NAME)
+          .then(cache => {
+            console.log('[SW] Caching static assets');
+            return cache.addAll(STATIC_ASSETS);
+          }),
+        self.skipWaiting()
+      ])
+    );
+  });
 
-// Activate event - clean up old caches
-self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating PWA Service Worker...');
-  
-  event.waitUntil(
-    Promise.all([
-      // Clean up old caches
-      caches.keys().then(cacheNames => {
-        return Promise.all(
-          cacheNames
-            .filter(cacheName => 
-              cacheName.startsWith('mohiro-') && 
-              ![STATIC_CACHE_NAME, DYNAMIC_CACHE_NAME, IMAGE_CACHE_NAME].includes(cacheName)
-            )
-            .map(cacheName => {
-              console.log('[SW] Deleting old cache:', cacheName);
-              return caches.delete(cacheName);
-            })
-        );
-      }),
-      self.clients.claim()
-    ])
-  );
-});
+  // Activate event - clean up old caches
+  self.addEventListener('activate', (event) => {
+    console.log('[SW] Activating PWA Service Worker...');
+    
+    event.waitUntil(
+      Promise.all([
+        // Clean up old caches
+        caches.keys().then(cacheNames => {
+          return Promise.all(
+            cacheNames
+              .filter(cacheName => 
+                cacheName.startsWith('mohiro-') && 
+                ![STATIC_CACHE_NAME, DYNAMIC_CACHE_NAME, IMAGE_CACHE_NAME].includes(cacheName)
+              )
+              .map(cacheName => {
+                console.log('[SW] Deleting old cache:', cacheName);
+                return caches.delete(cacheName);
+              })
+          );
+        }),
+        self.clients.claim()
+      ])
+    );
+  });
+}
 
 // Fetch event - implement caching strategies
-self.addEventListener('fetch', (event) => {
+if (!IS_DEV_SW) self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') return;
   
@@ -90,7 +110,10 @@ self.addEventListener('fetch', (event) => {
   // Determine cache strategy
   let strategy = 'network';
   
-  if (CACHE_STRATEGIES.static.some(pattern => pattern.test(request.url))) {
+  // Always prefer fresh content for Sanity APIs and images
+  if (url.hostname.includes('api.sanity.io') || url.hostname.includes('cdn.sanity.io')) {
+    strategy = 'networkFirst';
+  } else if (CACHE_STRATEGIES.static.some(pattern => pattern.test(request.url))) {
     strategy = 'cacheFirst';
   } else if (CACHE_STRATEGIES.images.some(pattern => pattern.test(request.url))) {
     strategy = 'imageCache';
@@ -150,11 +173,8 @@ async function networkFirst(request) {
   try {
     const networkResponse = await fetch(request);
     
-    // Cache successful responses from allowed origins
-    if (networkResponse.ok && (
-      request.url.startsWith(self.location.origin) || 
-      request.url.includes('cdn.sanity.io')
-    )) {
+    // Cache successful responses from same origin and Sanity CDN (images only)
+    if (networkResponse.ok && (request.url.startsWith(self.location.origin) || request.url.includes('cdn.sanity.io'))) {
       try {
         const cache = await caches.open(DYNAMIC_CACHE_NAME);
         await cache.put(request, networkResponse.clone());

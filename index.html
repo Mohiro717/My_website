@@ -9,7 +9,7 @@
     <meta name="author" content="Mohiro">
     <meta name="robots" content="index, follow">
     <meta name="language" content="ja">
-    <link rel="canonical" href="https://mohiro-portfolio.vercel.app/">
+    <link rel="canonical" href="https://my-website-b2kq5csjj-mohiros-projects.vercel.app/">
     
     <!-- Icons and manifest -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -145,8 +145,32 @@
   <body>
     <div id="root"></div>
     <script>
-      // Service Worker registration for image caching
-      if ('serviceWorker' in navigator) {
+      // Service Worker registration (production only)
+      // - Disabled on localhost and Vercel preview ("-git-" in hostname)
+      (function manageSW() {
+        if (!('serviceWorker' in navigator)) return;
+
+        const { hostname } = window.location;
+        const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+        const isVercelPreview = hostname.includes('-git-');
+
+        // In dev/preview, actively unregister any existing SW to avoid HMR issues and stale caches
+        if (isLocalhost || isVercelPreview) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.getRegistrations?.().then(regs => {
+              regs.forEach(reg => reg.unregister());
+            }).catch(() => {});
+            // Optionally clear project-specific caches
+            if ('caches' in window) {
+              caches.keys().then(keys => {
+                keys.filter(k => k.startsWith('mohiro-')).forEach(k => caches.delete(k));
+              }).catch(() => {});
+            }
+          });
+          return;
+        }
+
+        // Production: register SW
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/sw.js')
             .then(registration => {
@@ -156,7 +180,7 @@
               console.log('SW registration failed: ', registrationError);
             });
         });
-      }
+      })();
     </script>
   <script type="module" src="/index.tsx"></script>
 </body>
