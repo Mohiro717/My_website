@@ -1,38 +1,48 @@
 import { createClient } from '@sanity/client'
 
-// Read from Vite env (direct access ensures compile-time inlining)
 const isDev = import.meta.env.DEV
-const projectIdRaw = import.meta.env.VITE_SANITY_PROJECT_ID || ''
-const datasetRaw = import.meta.env.VITE_SANITY_DATASET || ''
 
-const projectId = projectIdRaw.trim()
-const dataset = (datasetRaw.trim() || 'production')
+const projectId = (import.meta.env.VITE_SANITY_PROJECT_ID ?? '').trim()
+const dataset = (import.meta.env.VITE_SANITY_DATASET ?? '').trim() || 'production'
+const apiVersion = (import.meta.env.VITE_SANITY_API_VERSION ?? '2024-01-01').trim() || '2024-01-01'
+
+const missingProjectMessage =
+  '[Sanity] Missing VITE_SANITY_PROJECT_ID. Follow https://www.sanity.io/docs/connect-your-frontend-to-sanity to configure your environment.'
 
 if (!projectId) {
-  const msg = 'Missing VITE_SANITY_PROJECT_ID. Set it in your environment (Vercel/locally).'
   if (isDev) {
-    try { console.warn(msg) } catch {}
+    try {
+      console.warn(missingProjectMessage)
+    } catch {}
   } else {
-    throw new Error(msg)
+    throw new Error(missingProjectMessage)
   }
 }
 
-if (isDev) {
-  try { console.log('Sanity Client Config:', { projectId, dataset }) } catch {}
+export const isSanityConfigured = Boolean(projectId)
+
+if (isDev && isSanityConfigured) {
+  try {
+    console.log('[Sanity] Client configured', { projectId, dataset, apiVersion })
+  } catch {}
 }
 
-export const sanityClient = createClient({
-  projectId,
-  dataset,
-  apiVersion: '2024-01-01',
-  useCdn: false,
-  perspective: 'published',
-  // Ensure no HTTP cache is used for queries
-  fetch: (input: RequestInfo, init: RequestInit = {}) => {
-    const headers = new Headers(init.headers || {})
-    headers.set('Cache-Control', 'no-store')
-    headers.set('Pragma', 'no-cache')
-    return fetch(input as any, { ...init, cache: 'no-store', headers })
-  },
-})
+const sharedConfig = isSanityConfigured
+  ? {
+      projectId,
+      dataset,
+      apiVersion,
+      useCdn: false,
+      perspective: 'published' as const,
+      fetch: (input: RequestInfo, init: RequestInit = {}) => {
+        const headers = new Headers(init.headers || {})
+        headers.set('Cache-Control', 'no-store')
+        headers.set('Pragma', 'no-cache')
+        return fetch(input as any, { ...init, cache: 'no-store', headers })
+      },
+    }
+  : null
 
+export const sanityClient = sharedConfig ? createClient(sharedConfig) : null
+
+export const missingSanityConfigMessage = missingProjectMessage

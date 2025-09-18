@@ -7,6 +7,7 @@ import OptimizedImage from '../components/ui/OptimizedImage';
 import SEOHead from '../components/ui/SEOHead';
 import AnimatedSection from '../components/ui/AnimatedSection';
 import { sanityService, urlFor } from '../services/sanityService';
+import { isSanityConfigured, missingSanityConfigMessage } from '../sanity.client';
 import type { Post } from '../types';
 
 const Section: React.FC<{title: string; children: React.ReactNode; className?: string, id?: string}> = ({ title, children, className, id }) => (
@@ -19,6 +20,7 @@ const Section: React.FC<{title: string; children: React.ReactNode; className?: s
 const HomePage: React.FC = () => {
   const [latestPosts, setLatestPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sanityError, setSanityError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const worksData = [
@@ -55,6 +57,13 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const fetchLatestPosts = async () => {
+      if (!isSanityConfigured) {
+        console.warn(missingSanityConfigMessage);
+        setSanityError('Sanity が未設定のため記事を取得できません。環境変数を設定して再読み込みしてください。');
+        setLoading(false);
+        return;
+      }
+
       try {
         console.log('Fetching posts from Sanity...');
         const posts = await sanityService.getPosts();
@@ -64,7 +73,11 @@ const HomePage: React.FC = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching latest posts:', error);
-        console.error('Error details:', error.message, error.statusCode);
+        const message = error instanceof Error ? error.message : String(error);
+        console.error('Error details:', message);
+        setSanityError(
+          'Sanity から記事を取得できませんでした。設定を確認してもう一度お試しください。'
+        );
         setLoading(false);
       }
     };
@@ -147,6 +160,14 @@ const HomePage: React.FC = () => {
         {/* Latest Blog Section */}
         <AnimatedSection animation="fadeUp" delay={400}>
           <Section title="Latest Blog Posts" id="blog-section">
+            {sanityError && (
+              <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-left text-red-800 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300">
+                <p className="font-semibold">{sanityError}</p>
+                <p className="mt-2 text-sm">
+                  公式ドキュメント: <a href="https://www.sanity.io/docs" target="_blank" rel="noreferrer" className="underline">Sanity Docs</a>
+                </p>
+              </div>
+            )}
             {loading ? <Spinner /> : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {latestPosts.map((post, index) => (
@@ -208,6 +229,24 @@ const HomePage: React.FC = () => {
                 <a href="mailto:mohiro.dev@gmail.com" className="text-xl font-semibold text-accent-blue hover:underline break-all">
                   mohiro.dev@gmail.com
                 </a>
+                <div className="mt-6 space-y-3">
+                  <a
+                    href="https://x.com/3537Hi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-base text-accent-blue hover:underline break-all"
+                  >
+                    X (旧Twitter): @3537Hi
+                  </a>
+                  <a
+                    href="https://stand.fm/channels/6892ddc1b09e6a462a52dd21"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-base text-accent-blue hover:underline break-all"
+                  >
+                    stand.fm チャンネル
+                  </a>
+                </div>
               </div>
             </AnimatedSection>
           </Section>
