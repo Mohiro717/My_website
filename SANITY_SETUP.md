@@ -21,9 +21,9 @@
   - `http://localhost:5173` (開発環境)
   - 本番環境のドメイン
 
-### APIトークン（オプション）
-- 非公開コンテンツが必要な場合のみ
-- **Settings** → **API** → **Tokens**で新規作成
+### APIトークン
+- ブログの閲覧数を計測するサーバーレス関数で必要です（`Editor` 以上の権限推奨）。
+- **Settings** → **API** → **Tokens**で新規作成し、`SANITY_WRITE_TOKEN` として保存してください。
 
 ## 3. 環境変数の設定
 
@@ -33,6 +33,7 @@
 # Sanity Configuration
 VITE_SANITY_PROJECT_ID=your-actual-project-id
 VITE_SANITY_DATASET=production
+SANITY_WRITE_TOKEN=your-sanity-write-token
 
 # Gemini API (existing)
 GEMINI_API_KEY=your-gemini-api-key
@@ -76,6 +77,7 @@ GEMINI_API_KEY=your-gemini-api-key
 - カテゴリ、タグ
 - 本文（リッチテキスト）
 - 注目記事フラグ
+- 閲覧数（`viewCount`、サーバーサイドで自動加算）
 
 ## 5. 初期データの投入
 

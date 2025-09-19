@@ -46,4 +46,5 @@ export interface Post {
   tags: Tag[];
   body: any[];
   featured?: boolean;
+  viewCount?: number;
 }

@@ -69,6 +69,7 @@ const FilteredBlogListPage: React.FC<FilteredBlogListPageProps> = ({ type }) => 
                 <div className="flex-grow">
                     <h3 className="text-xl font-bold mb-2 h-14 overflow-hidden">{post.title}</h3>
                     <p className="text-gray-600 mb-4 h-20 overflow-hidden text-sm">{post.excerpt}</p>
+                    <p className="text-gray-500 text-xs">{(post.viewCount ?? 0).toLocaleString()} views</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">
                     {(post.tags ?? []).slice(0, 3).map(tag => <Tag key={tag._id} color="pink">{tag.title}</Tag>)}

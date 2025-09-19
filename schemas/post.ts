@@ -135,6 +135,14 @@ export const postSchema = defineType({
       title: '注目記事',
       type: 'boolean',
       description: 'この記事を注目記事として表示する'
+    },
+    {
+      name: 'viewCount',
+      title: '閲覧数',
+      type: 'number',
+      readOnly: true,
+      initialValue: 0,
+      validation: (Rule: any) => Rule.min(0)
     }
   ],
   orderings: [

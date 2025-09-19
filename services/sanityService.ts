@@ -63,7 +63,8 @@ const postFields = `
     slug,
     color
   },
-  body
+  body,
+  viewCount
 `
 
 export const sanityService = {

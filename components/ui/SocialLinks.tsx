@@ -26,12 +26,27 @@ const InstagramIcon = () => (
     </svg>
 );
 
+const StandFmIcon = () => (
+    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2a5 5 0 00-5 5v4a5 5 0 003.5 4.773V19a1.5 1.5 0 003 0v-3.227A5 5 0 0017 11V7a5 5 0 00-5-5zm0 2a3 3 0 013 3v4a3 3 0 11-6 0V7a3 3 0 013-3z" />
+        <path d="M7 11a5 5 0 007.732 4.213l1.558 1.557a1.25 1.25 0 101.77-1.77l-1.556-1.558A5 5 0 0017 11h-2a3 3 0 11-6 0H7z" />
+    </svg>
+);
+
+const MailIcon = () => (
+    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm0 2v.217l8 5 8-5V6H4zm16 2.783l-7.445 4.653a1 1 0 01-1.11 0L4 8.783V18h16V8.783z" />
+    </svg>
+);
+
 
 const socialIcons: { [key: string]: React.FC } = {
   x: XIcon,
   github: GitHubIcon,
   instagram: InstagramIcon,
   zenn: ZennIcon,
+  standfm: StandFmIcon,
+  mail: MailIcon,
 };
 
 export interface SocialProfile {
@@ -43,9 +58,14 @@ export interface SocialProfile {
 interface SocialLinksProps {
   profiles: SocialProfile[];
   className?: string;
+  linkClassName?: string;
 }
 
-const SocialLinks: React.FC<SocialLinksProps> = ({ profiles, className = '' }) => {
+const SocialLinks: React.FC<SocialLinksProps> = ({
+  profiles,
+  className = '',
+  linkClassName = 'text-gray-500 hover:text-accent-pink transition duration-300',
+}) => {
   return (
     <div className={`flex justify-center space-x-6 ${className}`}>
       {profiles.map((profile) => {
@@ -57,7 +77,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ profiles, className = '' }) =
             target="_blank"
             rel="noopener noreferrer"
             aria-label={profile.name}
-            className="text-gray-500 hover:text-accent-pink transition duration-300"
+            className={linkClassName}
           >
             <Icon />
           </a>

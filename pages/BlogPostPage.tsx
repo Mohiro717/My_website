@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { sanityService, urlFor } from '../services/sanityService';
 import type { Post } from '../types';
@@ -37,9 +37,11 @@ const BlogPostPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const incrementedRef = useRef(false);
 
   useEffect(() => {
     if (!slug) return;
+    incrementedRef.current = false;
     const fetchPost = async () => {
       try {
         const fetchedPost = await sanityService.getPostBySlug(slug);
@@ -57,6 +59,36 @@ const BlogPostPage: React.FC = () => {
     fetchPost();
   }, [slug]);
 
+  useEffect(() => {
+    const incrementView = async () => {
+      if (!post || incrementedRef.current) return;
+      if (!post.slug?.current) return;
+
+      incrementedRef.current = true;
+
+      try {
+        const response = await fetch('/api/increment-view', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ slug: post.slug.current }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setPost(prev => (prev ? { ...prev, viewCount: typeof data.viewCount === 'number' ? data.viewCount : prev.viewCount } : prev));
+        }
+      } catch (incrementError) {
+        if (import.meta.env.DEV) {
+          console.warn('View count increment failed in dev environment.', incrementError);
+        }
+      }
+    };
+
+    incrementView();
+  }, [post]);
+
   if (loading) return <Spinner />;
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!post) return null;
@@ -66,7 +98,11 @@ const BlogPostPage: React.FC = () => {
       <header className="mb-8">
         <h1 className="text-4xl md:text-5xl font-bold font-serif text-center mb-4">{post.title}</h1>
         <div className="text-center text-gray-500 text-sm">
-          <span>Published on {new Date(post.publishedAt).toLocaleDateString()} by {post.author.name}</span>
+          <span>
+            Published on {new Date(post.publishedAt).toLocaleDateString()} by {post.author.name}
+            {' '}•{' '}
+            {(post.viewCount ?? 0).toLocaleString()} views
+          </span>
         </div>
         <div className="flex justify-center flex-wrap gap-2 mt-4">
           {(post.categories ?? []).map(cat => (

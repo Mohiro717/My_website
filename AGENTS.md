@@ -40,6 +40,9 @@ GEMINI_API_KEY=your-gemini-api-key
 # Sanity（`sanity.client.ts` で参照）
 VITE_SANITY_PROJECT_ID=your-sanity-project-id
 VITE_SANITY_DATASET=production
+
+# Sanity write token（`api/increment-view.ts` 経由で閲覧数を更新）
+SANITY_WRITE_TOKEN=your-sanity-write-token
 ```
 
 `vite.config.ts` では `loadEnv` により `process.env.GEMINI_API_KEY` を定義しています。Sanity の Project ID/Dataset は Vite の `import.meta.env` から読み取ります。フォールバックは廃止し、`VITE_SANITY_PROJECT_ID` が未設定の場合は本番でエラーとします（誤プロジェクト参照を防止）。`VITE_SANITY_DATASET` は未設定時に `production` を使用します。Sanity クライアント設定のコンソール出力は開発時のみ行います（`sanity.client.ts` を参照）。

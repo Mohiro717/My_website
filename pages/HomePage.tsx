@@ -6,6 +6,7 @@ import Spinner from '../components/ui/Spinner';
 import OptimizedImage from '../components/ui/OptimizedImage';
 import SEOHead from '../components/ui/SEOHead';
 import AnimatedSection from '../components/ui/AnimatedSection';
+import SocialLinks from '../components/ui/SocialLinks';
 import { sanityService, urlFor } from '../services/sanityService';
 import { isSanityConfigured, missingSanityConfigMessage } from '../sanity.client';
 import type { Post } from '../types';
@@ -22,6 +23,24 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [sanityError, setSanityError] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  const socialProfiles = [
+    {
+      name: 'メール: mohiro954@gmail.com',
+      url: 'mailto:mohiro954@gmail.com',
+      icon: 'mail' as const,
+    },
+    {
+      name: 'stand.fm チャンネル',
+      url: 'https://stand.fm/channels/6892ddc1b09e6a462a52dd21',
+      icon: 'standfm' as const,
+    },
+    {
+      name: 'X (旧Twitter): @3537Hi',
+      url: 'https://x.com/3537Hi',
+      icon: 'x' as const,
+    },
+  ];
 
   const worksData = [
     {
@@ -197,6 +216,7 @@ const HomePage: React.FC = () => {
                       <div className="p-6">
                         <h3 className="text-xl font-bold mb-2 h-14 overflow-hidden text-main-text dark:text-gray-100">{post.title}</h3>
                         <p className="text-gray-600 dark:text-gray-400 mb-4 h-20 overflow-hidden">{post.excerpt}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">{(post.viewCount ?? 0).toLocaleString()} views</p>
                         <div className="flex flex-wrap gap-2">
                           {(post.tags ?? []).slice(0, 2).map(tag => (
                             <Tag key={tag._id} color="pink">{tag.title}</Tag>
@@ -226,26 +246,15 @@ const HomePage: React.FC = () => {
                 <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
                   お仕事のご相談・ご依頼など、お気軽にご連絡ください。
                 </p>
-                <a href="mailto:mohiro.dev@gmail.com" className="text-xl font-semibold text-accent-blue hover:underline break-all">
-                  mohiro.dev@gmail.com
-                </a>
-                <div className="mt-6 space-y-3">
-                  <a
-                    href="https://x.com/3537Hi"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-base text-accent-blue hover:underline break-all"
-                  >
-                    X (旧Twitter): @3537Hi
-                  </a>
-                  <a
-                    href="https://stand.fm/channels/6892ddc1b09e6a462a52dd21"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-base text-accent-blue hover:underline break-all"
-                  >
-                    stand.fm チャンネル
-                  </a>
+                <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                  メールまたはアイコンからお気軽にご連絡ください。
+                </p>
+                <div className="mt-6">
+                  <SocialLinks
+                    profiles={socialProfiles}
+                    className="space-x-8"
+                    linkClassName="text-accent-blue hover:text-accent-pink transition duration-300"
+                  />
                 </div>
               </div>
             </AnimatedSection>

@@ -19,6 +19,7 @@ View your app in AI Studio: https://ai.studio/apps/drive/1_V_Ujn5sUZfVHYPtjmKjMt
 3. Set Sanity env vars in [.env.local](.env.local):
    - `VITE_SANITY_PROJECT_ID=<your-sanity-project-id>`
    - `VITE_SANITY_DATASET=production`
+   - `SANITY_WRITE_TOKEN=<sanity-token-with-mutate-scope>` (required for view counts)
 3. Run the app:
    `npm run dev`
 
@@ -30,6 +31,7 @@ View your app in AI Studio: https://ai.studio/apps/drive/1_V_Ujn5sUZfVHYPtjmKjMt
 - Add the same env vars in Vercel Project Settings → Environment Variables:
   - `VITE_SANITY_PROJECT_ID`
  - `VITE_SANITY_DATASET` (use `production` unless you have another dataset)
+ - `SANITY_WRITE_TOKEN` (token with `Editor` or `Writer` role for `post` documents)
 - Redeploy the project after adding variables.
 
 Note: The app uses Sanity with CDN disabled (`useCdn: false`) for immediate consistency after publishing in Studio.
