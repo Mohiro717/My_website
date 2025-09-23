@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { sanityService, urlFor } from '../services/sanityService';
 import type { Post } from '../types';
 import Spinner from '../components/ui/Spinner';
@@ -113,7 +113,22 @@ const BlogPostPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const incrementedRef = useRef(false);
+
+  const scrollToHeading = useCallback((slugId: string) => {
+    const target = document.getElementById(slugId);
+    if (!target) return;
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    if (target instanceof HTMLElement) {
+      // Delay focus slightly to avoid overriding the smooth scroll animation
+      requestAnimationFrame(() => {
+        target.focus({ preventScroll: true });
+      });
+    }
+  }, []);
 
   const { tableOfContents, headingSlugMap } = useMemo(() => {
     if (!post?.body) {
@@ -154,15 +169,14 @@ const BlogPostPage: React.FC = () => {
     return { tableOfContents: toc, headingSlugMap: headingSlugs };
   }, [post]);
 
-  const handleTableOfContentsClick = useCallback((slugId: string) => {
-    const target = document.getElementById(slugId);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (target instanceof HTMLElement) {
-        target.focus();
-      }
-    }
-  }, []);
+  const handleTableOfContentsClick = useCallback(
+    (slugId: string) => {
+      // Preserve the current route while tracking the selected section for deep links
+      navigate(`${location.pathname}?section=${encodeURIComponent(slugId)}`, { replace: true });
+      scrollToHeading(slugId);
+    },
+    [location.pathname, navigate, scrollToHeading]
+  );
 
   useEffect(() => {
     if (!slug) return;
@@ -215,6 +229,18 @@ const BlogPostPage: React.FC = () => {
 
     incrementView();
   }, [post]);
+
+  useEffect(() => {
+    if (!post) return;
+
+    const params = new URLSearchParams(location.search);
+    const section = params.get('section');
+    if (!section) return;
+
+    // Wait for content to render before attempting to scroll
+    const timeoutId = window.setTimeout(() => scrollToHeading(section), 100);
+    return () => window.clearTimeout(timeoutId);
+  }, [location.search, post, scrollToHeading]);
 
   if (loading) return <Spinner />;
   if (error) return <p className="text-center text-red-500">{error}</p>;
