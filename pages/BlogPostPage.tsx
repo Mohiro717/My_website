@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { sanityService, urlFor } from '../services/sanityService';
 import type { Post } from '../types';
 import Spinner from '../components/ui/Spinner';
@@ -112,7 +112,6 @@ const BlogPostPage: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const location = useLocation();
   const navigate = useNavigate();
   const incrementedRef = useRef(false);
 
@@ -169,17 +168,24 @@ const BlogPostPage: React.FC = () => {
     return { tableOfContents: toc, headingSlugMap: headingSlugs };
   }, [post]);
 
-  const updateSectionInHash = useCallback((sectionId: string) => {
-    if (typeof window === 'undefined') return;
-    const { hash, pathname, search: baseSearch } = window.location;
-    const trimmedHash = hash.startsWith('#') ? hash.slice(1) : hash;
-    const [hashPath, hashQuery = ''] = trimmedHash.split('?');
-    const params = new URLSearchParams(hashQuery);
-    params.set('section', sectionId);
-    const newHash = `#${hashPath}${params.toString() ? `?${params.toString()}` : ''}`;
-    const newUrl = `${pathname}${baseSearch}${newHash}`;
-    window.history.replaceState(null, '', newUrl);
-  }, []);
+  const updateSectionInHash = useCallback(
+    (sectionId: string) => {
+      if (typeof window === 'undefined' || !post?.slug?.current) return;
+      const hash = window.location.hash;
+      const [, hashQuery = ''] = (hash.startsWith('#') ? hash.slice(1) : hash).split('?');
+      const params = new URLSearchParams(hashQuery);
+      params.set('section', sectionId);
+      const trailing = params.toString();
+      const basePath = `/blog/${post.slug.current}`;
+      const newHash = `#${basePath}${trailing ? `?${trailing}` : ''}`;
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}${window.location.search}${newHash}`
+      );
+    },
+    [post?.slug?.current]
+  );
 
   const handleTableOfContentsClick = useCallback(
     (slugId: string) => {
@@ -242,16 +248,22 @@ const BlogPostPage: React.FC = () => {
   }, [post]);
 
   useEffect(() => {
-    if (!post) return;
+    if (!post?.slug?.current || typeof window === 'undefined') return;
 
-    const params = new URLSearchParams(location.search);
-    const section = params.get('section');
-    if (!section) return;
+    const scrollFromHash = () => {
+      const hash = window.location.hash;
+      const [, hashQuery = ''] = (hash.startsWith('#') ? hash.slice(1) : hash).split('?');
+      const params = new URLSearchParams(hashQuery);
+      const section = params.get('section');
+      if (!section) return;
 
-    // Wait for content to render before attempting to scroll
-    const timeoutId = window.setTimeout(() => scrollToHeading(section), 100);
-    return () => window.clearTimeout(timeoutId);
-  }, [location.search, post, scrollToHeading]);
+      window.setTimeout(() => scrollToHeading(section), 80);
+    };
+
+    scrollFromHash();
+    window.addEventListener('hashchange', scrollFromHash);
+    return () => window.removeEventListener('hashchange', scrollFromHash);
+  }, [post?.slug?.current, scrollToHeading]);
 
   if (loading) return <Spinner />;
   if (error) return <p className="text-center text-red-500">{error}</p>;
