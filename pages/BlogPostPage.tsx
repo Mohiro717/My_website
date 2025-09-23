@@ -171,11 +171,18 @@ const BlogPostPage: React.FC = () => {
 
   const handleTableOfContentsClick = useCallback(
     (slugId: string) => {
-      // Preserve the current route while tracking the selected section for deep links
-      navigate(`${location.pathname}?section=${encodeURIComponent(slugId)}`, { replace: true });
+      const params = new URLSearchParams(location.search);
+      params.set('section', slugId);
+      navigate(
+        {
+          pathname: location.pathname,
+          search: `?${params.toString()}`,
+        },
+        { replace: true }
+      );
       scrollToHeading(slugId);
     },
-    [location.pathname, navigate, scrollToHeading]
+    [location.pathname, location.search, navigate, scrollToHeading]
   );
 
   useEffect(() => {
