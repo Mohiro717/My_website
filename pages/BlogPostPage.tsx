@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { sanityService, urlFor } from '../services/sanityService';
 import type { Post } from '../types';
@@ -59,19 +59,34 @@ const PortableText: React.FC<PortableTextProps> = ({ blocks, headingSlugMap }) =
       switch (style) {
         case 'h2':
           return (
-            <h2 id={headingId} key={key} className="text-2xl font-bold mt-8 mb-4 scroll-mt-24">
+            <h2
+              id={headingId}
+              key={key}
+              className="text-2xl font-bold mt-8 mb-4 scroll-mt-24"
+              tabIndex={-1}
+            >
               {trimmed}
             </h2>
           );
         case 'h3':
           return (
-            <h3 id={headingId} key={key} className="text-xl font-bold mt-6 mb-3 scroll-mt-24">
+            <h3
+              id={headingId}
+              key={key}
+              className="text-xl font-bold mt-6 mb-3 scroll-mt-24"
+              tabIndex={-1}
+            >
               {trimmed}
             </h3>
           );
         case 'h4':
           return (
-            <h4 id={headingId} key={key} className="text-lg font-semibold mt-4 mb-2 scroll-mt-24">
+            <h4
+              id={headingId}
+              key={key}
+              className="text-lg font-semibold mt-4 mb-2 scroll-mt-24"
+              tabIndex={-1}
+            >
               {trimmed}
             </h4>
           );
@@ -138,6 +153,16 @@ const BlogPostPage: React.FC = () => {
 
     return { tableOfContents: toc, headingSlugMap: headingSlugs };
   }, [post]);
+
+  const handleTableOfContentsClick = useCallback((slugId: string) => {
+    const target = document.getElementById(slugId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (target instanceof HTMLElement) {
+        target.focus();
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (!slug) return;
@@ -231,9 +256,13 @@ const BlogPostPage: React.FC = () => {
                 key={item.key}
                 className={item.level === 3 ? 'ml-4' : item.level >= 4 ? 'ml-8' : ''}
               >
-                <a href={`#${item.slug}`} className="hover:underline">
+                <button
+                  type="button"
+                  onClick={() => handleTableOfContentsClick(item.slug)}
+                  className="w-full text-left hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
+                >
                   {item.text}
-                </a>
+                </button>
               </li>
             ))}
           </ul>
