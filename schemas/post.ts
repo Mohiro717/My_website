@@ -125,6 +125,13 @@ export const postSchema = defineType({
       validation: (Rule: any) => Rule.required()
     },
     {
+      name: 'seo',
+      title: 'SEO設定',
+      type: 'seo',
+      description: '検索エンジン向けのメタ情報を設定します。',
+      options: { collapsible: true, collapsed: true }
+    },
+    {
       name: 'publishedAt',
       title: '公開日',
       type: 'datetime',

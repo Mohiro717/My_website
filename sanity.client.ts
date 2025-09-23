@@ -34,12 +34,6 @@ const sharedConfig = isSanityConfigured
       apiVersion,
       useCdn: false,
       perspective: 'published' as const,
-      fetch: (input: RequestInfo, init: RequestInit = {}) => {
-        const headers = new Headers(init.headers || {})
-        headers.set('Cache-Control', 'no-store')
-        headers.set('Pragma', 'no-cache')
-        return fetch(input as any, { ...init, cache: 'no-store', headers })
-      },
     }
   : null
 

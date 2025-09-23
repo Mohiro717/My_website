@@ -7,6 +7,7 @@ export interface ImageLoadMetrics {
   fromCache: boolean;
   screenSize: string;
   devicePixelRatio: number;
+  timestamp?: number;
 }
 
 class PerformanceMonitor {

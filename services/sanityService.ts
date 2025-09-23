@@ -1,4 +1,3 @@
-
 import imageUrlBuilder from '@sanity/image-url'
 import type { Post, Category, Tag, Author } from '../types'
 import { sanityClient, missingSanityConfigMessage } from '../sanity.client'
@@ -64,6 +63,11 @@ const postFields = `
     color
   },
   body,
+  seo {
+    metaTitle,
+    metaDescription,
+    noIndex
+  },
   viewCount
 `
 
@@ -170,3 +174,4 @@ export const sanityService = {
     return await sanityClient.fetch(query, { searchQuery })
   }
 }
+

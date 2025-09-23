@@ -1,10 +1,17 @@
 import { sanityService } from '../services/sanityService';
 
+type SitemapEntry = {
+  url: string;
+  changefreq: string;
+  priority: string;
+  lastmod?: string;
+};
+
 export const generateSitemap = async (): Promise<string> => {
   const baseUrl = 'https://mohiro-portfolio.vercel.app';
   
   // Static pages
-  const staticPages = [
+  const staticPages: SitemapEntry[] = [
     { url: '', changefreq: 'monthly', priority: '1.0' },
     { url: '/blog', changefreq: 'weekly', priority: '0.8' },
     { url: '/terms-of-service', changefreq: 'yearly', priority: '0.3' },
@@ -12,7 +19,7 @@ export const generateSitemap = async (): Promise<string> => {
   ];
 
   // Dynamic pages (blog posts)
-  let dynamicPages: Array<{url: string, changefreq: string, priority: string, lastmod?: string}> = [];
+  let dynamicPages: SitemapEntry[] = [];
   
   try {
     const posts = await sanityService.getPosts();

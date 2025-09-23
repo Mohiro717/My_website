@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "node scripts/run-tests.js",
+    "lint": "node scripts/run-lint.js",
+    "typecheck": "tsc --noEmit",
     "build": "vite build",
     "preview": "vite preview",
     "studio": "sanity dev --config sanity.config.studio.ts",

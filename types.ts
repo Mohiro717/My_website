@@ -1,4 +1,3 @@
-
 export interface Category {
   _id: string;
   title: string;
@@ -15,6 +14,12 @@ export interface Tag {
     current: string;
   };
   color?: string;
+}
+
+export interface Seo {
+  metaTitle?: string;
+  metaDescription?: string;
+  noIndex?: boolean;
 }
 
 export interface Author {
@@ -45,6 +50,8 @@ export interface Post {
   categories: Category[];
   tags: Tag[];
   body: any[];
+  seo?: Seo;
   featured?: boolean;
   viewCount?: number;
 }
+
