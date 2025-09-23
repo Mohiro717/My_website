@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { sanityService, urlFor } from '../services/sanityService';
 import type { Post } from '../types';
 import Spinner from '../components/ui/Spinner';
@@ -112,8 +112,8 @@ const BlogPostPage: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
   const incrementedRef = useRef(false);
 
   const scrollToHeading = useCallback((slugId: string) => {
@@ -169,20 +169,24 @@ const BlogPostPage: React.FC = () => {
     return { tableOfContents: toc, headingSlugMap: headingSlugs };
   }, [post]);
 
+  const updateSectionInHash = useCallback((sectionId: string) => {
+    if (typeof window === 'undefined') return;
+    const { hash, pathname, search: baseSearch } = window.location;
+    const trimmedHash = hash.startsWith('#') ? hash.slice(1) : hash;
+    const [hashPath, hashQuery = ''] = trimmedHash.split('?');
+    const params = new URLSearchParams(hashQuery);
+    params.set('section', sectionId);
+    const newHash = `#${hashPath}${params.toString() ? `?${params.toString()}` : ''}`;
+    const newUrl = `${pathname}${baseSearch}${newHash}`;
+    window.history.replaceState(null, '', newUrl);
+  }, []);
+
   const handleTableOfContentsClick = useCallback(
     (slugId: string) => {
-      const params = new URLSearchParams(location.search);
-      params.set('section', slugId);
-      navigate(
-        {
-          pathname: location.pathname,
-          search: `?${params.toString()}`,
-        },
-        { replace: true }
-      );
+      updateSectionInHash(slugId);
       scrollToHeading(slugId);
     },
-    [location.pathname, location.search, navigate, scrollToHeading]
+    [scrollToHeading, updateSectionInHash]
   );
 
   useEffect(() => {
