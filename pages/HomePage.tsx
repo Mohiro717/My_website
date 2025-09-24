@@ -132,11 +132,37 @@ const HomePage: React.FC = () => {
             <div className="max-w-4xl mx-auto text-center">
               <AnimatedSection animation="scale" delay={600}>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                  I'm a creative developer passionate about building exceptional digital experiences. 
-                  With expertise in React, TypeScript, and modern web technologies, I create solutions that are both beautiful and functional.
+                  こんにちはMohiroです！ようこそ僕のホームページに！
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  With a background in both design and development, I strive to build products that are not only functional but also beautiful and intuitive. My journey in tech is driven by a constant curiosity and a desire to solve real-world problems.
+                  僕は以前は会社員として三交代勤務、週末は家族と公園で過ごす、ごく普通の毎日を送っていました。
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  しかし、2023年に長男の難病が判明し、生活は一変しました。入退院の繰り返し、上の子の心のケア、そして私自身も過労で、文字通り心身ともにダウンしました。
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  このままでは家族が立ち行かないと覚悟し、育児休業を取得後、日勤に切り替えました。
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  収入は減りましたが、家族を最優先するこの選択が、僕たち家族にとっての最適解だと信じています。
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  そんな大変な時期に出会ったのがBGLです。そこには「学び」「創造」「遊び」が活発に行き交う心地よい空間が広がっていました。
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  BGLに参加することで、長い間忘れていた「何かに熱中する」という感覚が僕の中に蘇りました。
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  スキルがなくても、一歩ずつ着実に積み重ねていけばやがて形になる——そんな手応えを改めて感じています。
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  現在は、父親としての時間を大切にしながら、創作活動と学び直しを地道に続けています。
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  よちよち歩きを始めた長男に「こんな生き方もあるんだよ」と、自分の背中で子どもたちに示せるよう、日々小さな一歩を積み上げています。
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                  これからも、同じような境遇にいる誰かの希望となるようなコンテンツを発信し、私自身の学びも深めていきたいと思っています。
                 </p>
               </AnimatedSection>
             </div>
