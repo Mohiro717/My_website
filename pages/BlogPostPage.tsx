@@ -195,6 +195,51 @@ const BlogPostPage: React.FC = () => {
     [scrollToHeading, updateSectionInHash]
   );
 
+  const shareUrl = useMemo(() => {
+    if (!post?.slug?.current) return '';
+
+    if (typeof window !== 'undefined') {
+      const { origin, pathname } = window.location;
+      const base = `${origin}${pathname}`.replace(/\/$/, '');
+      return `${base}/#/blog/${post.slug.current}`;
+    }
+
+    const fallback = (import.meta.env['VITE_SITE_URL'] as string | undefined)?.replace(/\/$/, '');
+    if (fallback) {
+      return `${fallback}/blog/${post.slug.current}`;
+    }
+
+    return `/blog/${post.slug.current}`;
+  }, [post?.slug?.current]);
+
+  const shareLinks = useMemo(() => {
+    if (!shareUrl) return [] as Array<{ id: string; label: string; href: string; className: string }>;
+
+    const encodedUrl = encodeURIComponent(shareUrl);
+    const encodedTitle = encodeURIComponent(post?.title ?? '');
+
+    return [
+      {
+        id: 'facebook',
+        label: 'Facebook',
+        href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+        className: 'bg-blue-600 hover:bg-blue-700'
+      },
+      {
+        id: 'twitter',
+        label: 'X (Twitter)',
+        href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+        className: 'bg-sky-500 hover:bg-sky-600'
+      },
+      {
+        id: 'linkedin',
+        label: 'LinkedIn',
+        href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+        className: 'bg-blue-800 hover:bg-blue-900'
+      }
+    ];
+  }, [post?.title, shareUrl]);
+
   useEffect(() => {
     if (!slug) return;
     incrementedRef.current = false;
@@ -322,16 +367,25 @@ const BlogPostPage: React.FC = () => {
         <PortableText blocks={post.body} headingSlugMap={headingSlugMap} />
       </div>
 
-      {/* Share Buttons */}
-      <div className="mt-12 text-center">
-        <h3 className="font-bold mb-4">Share this post</h3>
-        <div className="flex justify-center space-x-4">
-          {/* Dummy share links */}
-          <a href="#" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">Facebook</a>
-          <a href="#" className="bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 transition">Twitter</a>
-          <a href="#" className="bg-blue-800 text-white px-4 py-2 rounded-md hover:bg-blue-900 transition">LinkedIn</a>
+      {shareLinks.length > 0 && (
+        <div className="mt-12 text-center">
+          <h3 className="font-bold mb-4">Share this post</h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            {shareLinks.map(link => (
+              <a
+                key={link.id}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Share on ${link.label}`}
+                className={`${link.className} text-white px-4 py-2 rounded-md transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-white`}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </article>
   );
 };
