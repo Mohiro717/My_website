@@ -34,12 +34,19 @@ const App: React.FC = () => {
     }
   }, [location]);
 
+  const isHome = location.pathname === '/';
+
+  const wrapperBaseClasses = 'max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 my-8';
+  const wrapperClasses = isHome
+    ? wrapperBaseClasses
+    : `content-wrapper ${wrapperBaseClasses} rounded-lg shadow-xl`;
+
   return (
     <div className="flex flex-col min-h-screen font-sans text-main-text dark:text-gray-100 relative">
       <CustomBackground imagePath="/images/background.webp" priority={true} />
       <Header />
       <main className="flex-grow">
-        <div className="content-wrapper max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 my-8 rounded-lg shadow-xl">
+        <div className={wrapperClasses}>
           <Suspense fallback={
             <div className="flex justify-center items-center py-20">
               <Spinner />

@@ -121,25 +121,114 @@ const HomePage: React.FC = () => {
       <div className="space-y-16">
         {/* Hero Section */}
         <AnimatedSection animation="fadeUp" duration={0.8}>
-          <section id="home" className="text-center py-20 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-lg shadow-inner">
-            <h1 className="text-4xl md:text-6xl font-extrabold font-serif text-main-text dark:text-gray-100 leading-tight">
-              Welcome to My Creative Space
-            </h1>
-            <p className="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              I'm Mohiro, a passionate developer and designer. Here you'll find my work, thoughts, and creative journey.
-            </p>
+          <section
+            id="home"
+            className="relative mx-auto flex max-w-5xl flex-col items-center gap-10 px-6 py-16 text-center sm:py-20"
+          >
+            <div className="pointer-events-none absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-accent-pink/25 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-16 right-1/4 h-72 w-72 rounded-full bg-accent-blue/25 blur-3xl" />
+            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.65)_0%,_rgba(255,255,255,0)_60%)]" />
+
+            <div className="relative w-full">
+              <div className="pointer-events-none absolute -inset-[1.5px] -z-10 rounded-3xl bg-[conic-gradient(from_120deg_at_50%_50%,rgba(255,255,255,0.6),rgba(255,255,255,0)_150deg,rgba(255,255,255,0.6)_300deg,rgba(255,255,255,0)_360deg)] opacity-70 blur-xl animate-[spin_18s_linear_infinite]" />
+              <div className="relative overflow-hidden rounded-3xl border border-white/25 bg-white/15 p-12 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.45)] backdrop-blur-2xl dark:border-gray-700/60 dark:bg-gray-900/40">
+                <div className="pointer-events-none absolute inset-0 rounded-[inherit] border border-white/40 opacity-70" />
+                <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(115deg,rgba(255,255,255,0.55),rgba(255,255,255,0)_55%)] opacity-75" />
+                <div className="relative flex flex-col items-center gap-8 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex-1 space-y-6 text-center sm:text-left">
+                    <p className="inline-flex items-center justify-center rounded-full bg-white/20 px-4 py-1 text-xs font-semibold tracking-[0.3em] uppercase text-accent-blue backdrop-blur-lg dark:text-accent-pink">
+                      Craft & Challenge
+                    </p>
+                    <h1 className="text-4xl font-extrabold leading-tight text-main-text dark:text-gray-100 md:text-6xl">
+                      Welcome to My Creative Space
+                    </h1>
+                    <p className="text-base text-gray-600 dark:text-gray-300 md:text-lg">
+                      I'm Mohiro, a developer and storyteller exploring UEFN, Verse, and web experiences.
+                      <br />
+                      家族と共に歩む挑戦の記録を、この場所から発信しています。
+                    </p>
+                  <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-start">
+                    <Link
+                      to="/#works"
+                      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#f7d0ef] via-[#fbe4d4] to-[#cde6ff] px-8 py-3 text-sm font-semibold text-main-text shadow-[0_18px_40px_-22px_rgba(236,72,153,0.7)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_45px_-20px_rgba(236,72,153,0.55)]"
+                    >
+                      制作実績をみる
+                      <svg
+                        className="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                    <Link
+                      to="/blog"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/50 bg-white/10 px-7 py-3 text-sm font-semibold text-accent-blue backdrop-blur-lg transition duration-300 hover:-translate-y-0.5 hover:bg-white/25 dark:text-accent-pink"
+                    >
+                      ブログを読む
+                      <svg
+                        className="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+                <div className="relative hidden flex-1 items-center justify-center sm:flex">
+                  <div className="absolute -left-12 top-6 h-44 w-6 rounded-full bg-gradient-to-b from-pink-200/50 via-transparent to-blue-200/50 blur-2xl" />
+                  <div className="relative h-64 w-64">
+                    <div className="absolute -left-10 bottom-8 h-40 w-28 -rotate-6 overflow-hidden rounded-[1.75rem] border border-white/30 bg-white/20 shadow-[0_20px_35px_-20px_rgba(15,23,42,0.45)] backdrop-blur-xl">
+                      <img
+                        src="/images/portfolio-screenshot.jpg"
+                        alt="Web project screenshot"
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="relative h-64 w-64 rotate-3 overflow-hidden rounded-[2.5rem] border border-white/35 bg-gradient-to-br from-white/30 via-white/10 to-transparent shadow-[0_30px_55px_-28px_rgba(14,23,42,0.55)] backdrop-blur-2xl">
+                      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.45),rgba(255,255,255,0)_60%)] opacity-80" />
+                      <img
+                        src="/images/portfolio-uefn.jpg"
+                        alt="Mohiro's UEFN creation"
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="absolute -right-10 -bottom-6 flex h-28 w-28 flex-col items-center justify-center gap-1 rounded-full border border-white/50 bg-white/25 text-xs font-semibold uppercase tracking-[0.3em] text-accent-blue backdrop-blur-2xl shadow-[0_18px_35px_-22px_rgba(14,23,42,0.55)] dark:text-accent-pink">
+                      <span className="text-sm">UEFN</span>
+                      <span className="text-sm tracking-[0.08em] text-main-text dark:text-gray-100">Verse</span>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
           </section>
         </AnimatedSection>
-
-        {/* About Section */}
-        <AnimatedSection animation="fadeUp" delay={200}>
-          <Section title="About Me" id="about">
-            <div className="max-w-4xl mx-auto text-center">
-              <AnimatedSection animation="scale" delay={600}>
-                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                  こんにちはMohiroです！
-                  <br className="hidden md:block" />
-                  ようこそ僕のホームページに！
+        
+        <div className="content-wrapper rounded-3xl shadow-xl px-6 py-12 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
+          <div className="space-y-16">
+            {/* About Section */}
+            <AnimatedSection animation="fadeUp" delay={200}>
+              <Section title="About Me" id="about">
+                <div className="mx-auto max-w-5xl text-center">
+                  <AnimatedSection animation="scale" delay={600}>
+                    <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                      こんにちはMohiroです！
+                      <br className="hidden md:block" />
+                      ようこそ僕のホームページに！
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
                   僕は以前は会社員として三交代勤務、週末は家族と公園で過ごす、
@@ -192,169 +281,171 @@ const HomePage: React.FC = () => {
                   私自身の学びも深めていきたいと思っています。
                 </p>
               </AnimatedSection>
-            </div>
-          </Section>
-        </AnimatedSection>
+                </div>
+            </Section>
+          </AnimatedSection>
 
-        {/* Works Section */}
-        <AnimatedSection animation="fadeUp" delay={300}>
-          <Section title="制作実績" id="works">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {worksData.map((work, index) => (
-                <AnimatedSection
-                  key={work.id}
-                  animation="fadeUp"
-                  delay={400 + index * 150}
-                >
-                  <a
-                    href={work.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block group"
-                    aria-label={`${work.title} - ${work.linkLabel}`}
+          {/* Works Section */}
+          <AnimatedSection animation="fadeUp" delay={300}>
+            <Section title="制作実績" id="works">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {worksData.map((work, index) => (
+                  <AnimatedSection
+                    key={work.id}
+                    animation="fadeUp"
+                    delay={400 + index * 150}
                   >
-                    <Card className="h-full">
-                      <div className="overflow-hidden rounded-t-lg">
-                        <OptimizedImage
-                          src={work.imageUrl}
-                          alt={work.title}
-                          width={600}
-                          height={400}
-                          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="flex flex-col flex-1 p-6 space-y-4">
-                        <span className="inline-flex w-fit items-center rounded-full border border-accent-blue/20 bg-accent-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-accent-blue">
-                          {work.category}
-                        </span>
-                        <h3 className="text-xl font-bold text-main-text dark:text-gray-100">
-                          {work.title}
-                        </h3>
-                        <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-                          {work.description}
-                        </p>
-                        <div className="mt-auto flex flex-wrap gap-2">
-                          {work.skills.map((skill) => (
-                            <span
-                              key={skill}
-                              className="rounded-full bg-accent-pink/15 px-3 py-1 text-xs font-semibold text-accent-pink"
+                    <a
+                      href={work.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block group"
+                      aria-label={`${work.title} - ${work.linkLabel}`}
+                    >
+                      <Card className="h-full">
+                        <div className="overflow-hidden rounded-t-lg">
+                          <OptimizedImage
+                            src={work.imageUrl}
+                            alt={work.title}
+                            width={600}
+                            height={400}
+                            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="flex flex-col flex-1 p-6 space-y-4">
+                          <span className="inline-flex w-fit items-center rounded-full border border-accent-blue/20 bg-accent-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-accent-blue">
+                            {work.category}
+                          </span>
+                          <h3 className="text-xl font-bold text-main-text dark:text-gray-100">
+                            {work.title}
+                          </h3>
+                          <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                            {work.description}
+                          </p>
+                          <div className="mt-auto flex flex-wrap gap-2">
+                            {work.skills.map((skill) => (
+                              <span
+                                key={skill}
+                                className="rounded-full bg-accent-pink/15 px-3 py-1 text-xs font-semibold text-accent-pink"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                          <span className="inline-flex items-center gap-2 text-sm font-semibold text-accent-blue transition-colors duration-300 group-hover:text-accent-pink">
+                            {work.linkLabel}
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              viewBox="0 0 24 24"
+                              aria-hidden="true"
                             >
-                              {skill}
-                            </span>
-                          ))}
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 12h14M12 5l7 7-7 7"
+                              />
+                            </svg>
+                          </span>
                         </div>
-                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-accent-blue transition-colors duration-300 group-hover:text-accent-pink">
-                          {work.linkLabel}
-                          <svg
-                            className="h-4 w-4"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M5 12h14M12 5l7 7-7 7"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </Card>
-                  </a>
-                </AnimatedSection>
-              ))}
-            </div>
-          </Section>
-        </AnimatedSection>
-
-        {/* Latest Blog Section */}
-        <AnimatedSection animation="fadeUp" delay={400}>
-          <Section title="Latest Blog Posts" id="blog-section">
-            {sanityError && (
-              <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-left text-red-800 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300">
-                <p className="font-semibold">{sanityError}</p>
-                <p className="mt-2 text-sm">
-                  公式ドキュメント: <a href="https://www.sanity.io/docs" target="_blank" rel="noreferrer" className="underline">Sanity Docs</a>
-                </p>
-              </div>
-            )}
-            {loading ? <Spinner /> : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {latestPosts.map((post, index) => (
-                  <AnimatedSection 
-                    key={post._id}
-                    animation="fadeUp" 
-                    delay={500 + (index * 150)}
-                  >
-                    <Card onClick={() => navigate(`/blog/${post.slug.current}`)}>
-                      {post.mainImage ? (
-                        <OptimizedImage 
-                          src={urlFor(post.mainImage).width(600).height(400).url()} 
-                          alt={post.title} 
-                          width={600} 
-                          height={400}
-                          className="w-full h-48 object-cover"
-                        />
-                      ) : (
-                        <OptimizedImage 
-                          src="https://picsum.photos/600/400" 
-                          alt={post.title} 
-                          width={600} 
-                          height={400}
-                          className="w-full h-48 object-cover"
-                        />
-                      )}
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold mb-2 h-14 overflow-hidden text-main-text dark:text-gray-100">{post.title}</h3>
-                        <p className="text-gray-600 dark:text-gray-400 mb-4 h-20 overflow-hidden">{post.excerpt}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">{(post.viewCount ?? 0).toLocaleString()} views</p>
-                        <div className="flex flex-wrap gap-2">
-                          {(post.tags ?? []).slice(0, 2).map(tag => (
-                            <Tag key={tag._id} color="pink">{tag.title}</Tag>
-                          ))}
-                        </div>
-                      </div>
-                    </Card>
+                      </Card>
+                    </a>
                   </AnimatedSection>
                 ))}
               </div>
-            )}
-            <AnimatedSection animation="fadeUp" delay={800}>
-              <div className="text-center mt-12">
-                <Link to="/blog" className="inline-block bg-accent-blue text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-blue-500 transition-all duration-300">
-                  View All Posts
-                </Link>
-              </div>
-            </AnimatedSection>
-          </Section>
-        </AnimatedSection>
+            </Section>
+          </AnimatedSection>
 
-        {/* Contact Section */}
-        <AnimatedSection animation="fadeUp" delay={500}>
-          <Section title="Contact" id="contact">
-            <AnimatedSection animation="scale" delay={700}>
-              <div className="max-w-xl mx-auto text-center bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm p-8 rounded-lg shadow-inner">
-                <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
-                  日々の学習の様子はXで、よりカジュアルな音声配信はstand.fmで行っています。
-                  <br className="hidden md:block" />
-                  ブログも準備中です。フォローやDM、いつでも大歓迎です！
-                </p>
-                <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                  メールまたはアイコンからお気軽にご連絡ください。
-                </p>
-                <div className="mt-6">
-                  <SocialLinks
-                    profiles={socialProfiles}
-                    className="space-x-8"
-                    linkClassName="text-accent-blue hover:text-accent-pink transition duration-300"
-                  />
+          {/* Latest Blog Section */}
+          <AnimatedSection animation="fadeUp" delay={400}>
+            <Section title="Latest Blog Posts" id="blog-section">
+              {sanityError && (
+                <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-left text-red-800 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300">
+                  <p className="font-semibold">{sanityError}</p>
+                  <p className="mt-2 text-sm">
+                    公式ドキュメント: <a href="https://www.sanity.io/docs" target="_blank" rel="noreferrer" className="underline">Sanity Docs</a>
+                  </p>
                 </div>
-              </div>
-            </AnimatedSection>
-          </Section>
-        </AnimatedSection>
+              )}
+              {loading ? <Spinner /> : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {latestPosts.map((post, index) => (
+                    <AnimatedSection 
+                      key={post._id}
+                      animation="fadeUp" 
+                      delay={500 + (index * 150)}
+                    >
+                      <Card onClick={() => navigate(`/blog/${post.slug.current}`)}>
+                        {post.mainImage ? (
+                          <OptimizedImage 
+                            src={urlFor(post.mainImage).width(600).height(400).url()} 
+                            alt={post.title} 
+                            width={600} 
+                            height={400}
+                            className="w-full h-48 object-cover"
+                          />
+                        ) : (
+                          <OptimizedImage 
+                            src="https://picsum.photos/600/400" 
+                            alt={post.title} 
+                            width={600} 
+                            height={400}
+                            className="w-full h-48 object-cover"
+                          />
+                        )}
+                        <div className="p-6">
+                          <h3 className="text-xl font-bold mb-2 h-14 overflow-hidden text-main-text dark:text-gray-100">{post.title}</h3>
+                          <p className="text-gray-600 dark:text-gray-400 mb-4 h-20 overflow-hidden">{post.excerpt}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">{(post.viewCount ?? 0).toLocaleString()} views</p>
+                          <div className="flex flex-wrap gap-2">
+                            {(post.tags ?? []).slice(0, 2).map(tag => (
+                              <Tag key={tag._id} color="pink">{tag.title}</Tag>
+                            ))}
+                          </div>
+                        </div>
+                      </Card>
+                    </AnimatedSection>
+                  ))}
+                </div>
+              )}
+              <AnimatedSection animation="fadeUp" delay={800}>
+                <div className="text-center mt-12">
+                  <Link to="/blog" className="inline-block bg-accent-blue text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-blue-500 transition-all duration-300">
+                    View All Posts
+                  </Link>
+                </div>
+              </AnimatedSection>
+            </Section>
+          </AnimatedSection>
+
+          {/* Contact Section */}
+          <AnimatedSection animation="fadeUp" delay={500}>
+            <Section title="Contact" id="contact">
+              <AnimatedSection animation="scale" delay={700}>
+                <div className="max-w-xl mx-auto text-center bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm p-8 rounded-lg shadow-inner">
+                  <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+                    日々の学習の様子はXで、よりカジュアルな音声配信はstand.fmで行っています。
+                    <br className="hidden md:block" />
+                    ブログも準備中です。フォローやDM、いつでも大歓迎です！
+                  </p>
+                  <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                    メールまたはアイコンからお気軽にご連絡ください。
+                  </p>
+                  <div className="mt-6">
+                    <SocialLinks
+                      profiles={socialProfiles}
+                      className="space-x-8"
+                      linkClassName="text-accent-blue hover:text-accent-pink transition duration-300"
+                    />
+                  </div>
+                </div>
+              </AnimatedSection>
+            </Section>
+          </AnimatedSection>
+          </div>
+        </div>
       </div>
     </>
   );
