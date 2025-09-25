@@ -9,7 +9,7 @@ import AnimatedSection from '../components/ui/AnimatedSection';
 import SocialLinks from '../components/ui/SocialLinks';
 import { sanityService, urlFor } from '../services/sanityService';
 import { isSanityConfigured, missingSanityConfigMessage } from '../sanity.client';
-import type { Post } from '../types';
+import type { Post, Work } from '../types';
 
 const Section: React.FC<{title: string; children: React.ReactNode; className?: string, id?: string}> = ({ title, children, className, id }) => (
     <section id={id} className={`py-12 sm:py-16 ${className}`}>
@@ -42,34 +42,39 @@ const HomePage: React.FC = () => {
     },
   ];
 
-  const worksData = [
+  const worksData: Work[] = [
     {
       id: 1,
-      title: 'Mohiro\'s Portfolio',
-      description: 'Next.js, TypeScript, Tailwind CSSで構築したポートフォリオサイトです。',
-      imageUrl: 'https://picsum.photos/seed/work-portfolio/600/400',
-      link: 'https://mohiro-portfolio.vercel.app/',
+      category: 'UEFN Game',
+      title: '個人制作マップ',
+      description:
+        '初めてUEFNとVerseに触れ、アスレチックとスマブラ風アクションゲームの要素を詰め込んだマップ。手探り状態から、ゲームを「創る」ことの楽しさと難しさを学びました。僕のクリエイターとしての原点です。',
+      imageUrl: '/images/portfolio-uefn.jpg',
+      link: 'https://www.fortnite.com/@mohiro?lang=ja',
+      linkLabel: 'マップをプレイする',
+      skills: ['UEFN', 'Verse', 'Game Design'],
     },
     {
       id: 2,
-      title: 'Recipe App',
-      description: '外部APIを使用してレシピを検索するアプリです。Reactで構築し、デザインはFigmaで行いました。',
-      imageUrl: 'https://picsum.photos/seed/work-recipe/600/400',
-      link: 'https://recipe-app-zeta-kohl.vercel.app/',
+      category: 'UEFN Contribution',
+      title: 'BGL制作マップ協力',
+      description:
+        'BGLのプロジェクトで、Verseを用いた特殊能力システムの開発に協力しました。チームでの開発、他のクリエイターとの連携を通して、コードがゲームに命を吹き込む瞬間を体験しました。',
+      imageUrl: '/images/roguelike_bgl.jpg',
+      link: 'https://www.fortnite.com/@bgl/1305-1553-1636?lang=ja',
+      linkLabel: 'マップをプレイする',
+      skills: ['Verse', 'Team Development', 'System Design'],
     },
     {
       id: 3,
-      title: 'Blog',
-      description: 'Next.jsとmicroCMSで構築したブログサイトです。',
-      imageUrl: 'https://picsum.photos/seed/work-blog/600/400',
-      link: 'https://next-microcms-blog-brown.vercel.app/',
-    },
-    {
-      id: 4,
-      title: 'Landing Page',
-      description: 'Figma, HTML, CSS, JavaScriptを使用したランディングページです。',
-      imageUrl: 'https://picsum.photos/seed/work-landing/600/400',
-      link: 'https://mohiro-frontend-one.vercel.app/',
+      category: 'Development',
+      title: 'Webサイト制作',
+      description:
+        'Vibe Codingで、デザインの再現性はもちろん、コンポーネント設計やパフォーマンスを意識して実装したWebサイトです。実装には Next.js (React) を採用し、Sass (SCSS) と CSS Modules でスタイリングを行うことで、再利用性が高く保守性に優れたコードを目指しました。私にとって、モダンなフロントエンド開発の基礎を固める上で、大きな一歩となった大切な作品です。',
+      imageUrl: '/images/portfolio-screenshot.jpg',
+      link: 'https://mokumokuhouse.vercel.app/',
+      linkLabel: 'サイトを見る',
+      skills: ['Next.js', 'Sass', 'CSS Modules', 'UI/UX Design'],
     },
   ];
 
@@ -132,37 +137,59 @@ const HomePage: React.FC = () => {
             <div className="max-w-4xl mx-auto text-center">
               <AnimatedSection animation="scale" delay={600}>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                  こんにちはMohiroです！ようこそ僕のホームページに！
+                  こんにちはMohiroです！
+                  <br className="hidden md:block" />
+                  ようこそ僕のホームページに！
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  僕は以前は会社員として三交代勤務、週末は家族と公園で過ごす、ごく普通の毎日を送っていました。
+                  僕は以前は会社員として三交代勤務、週末は家族と公園で過ごす、
+                  <br className="hidden md:block" />
+                  ごく普通の毎日を送っていました。
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  しかし、2023年に長男の難病が判明し、生活は一変しました。入退院の繰り返し、上の子の心のケア、そして私自身も過労で、文字通り心身ともにダウンしました。
+                  しかし、2023年に長男の難病が判明し生活は一変。
+                  <br className="hidden md:block" />
+                  入退院の繰り返し、上の子の心のケア、そして私自身も過労で、文字通り心身ともにダウンしました。
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  このままでは家族が立ち行かないと覚悟し、育児休業を取得後、日勤に切り替えました。
+                  このままでは家族が立ち行かないと覚悟し、
+                  <br className="hidden md:block" />
+                  育児休業を取得後、日勤に切り替えました。
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  収入は減りましたが、家族を最優先するこの選択が、僕たち家族にとっての最適解だと信じています。
+                  収入は減りましたが、家族を最優先するこの選択が、
+                  <br className="hidden md:block" />
+                  僕たち家族にとっての最適解だと信じています。
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  そんな大変な時期に出会ったのがBGLです。そこには「学び」「創造」「遊び」が活発に行き交う心地よい空間が広がっていました。
+                  そんな大変な時期に出会ったのがBGLです。
+                  <br className="hidden md:block" />
+                  そこには「学び」「創造」「遊び」が活発に行き交う心地よい空間が広がっていました。
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  BGLに参加することで、長い間忘れていた「何かに熱中する」という感覚が僕の中に蘇りました。
+                  BGLに参加することで、長い間忘れていた「何かに熱中する」という感覚が、
+                  <br className="hidden md:block" />
+                  僕の中に蘇りました。
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  スキルがなくても、一歩ずつ着実に積み重ねていけばやがて形になる——そんな手応えを改めて感じています。
+                  スキルがなくても、一歩ずつ着実に積み重ねていけばやがて形になる——。
+                  <br className="hidden md:block" />
+                  そんな手応えを改めて感じています。
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  現在は、父親としての時間を大切にしながら、創作活動と学び直しを地道に続けています。
+                  現在は父親としての時間を大切にしながら、
+                  <br className="hidden md:block" />
+                  創作活動と学び直しを地道に続けています。
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  よちよち歩きを始めた長男に「こんな生き方もあるんだよ」と、自分の背中で子どもたちに示せるよう、日々小さな一歩を積み上げています。
+                  よちよち歩きを始めた長男に「こんな生き方もあるんだよ」と伝えられるように。
+                  <br className="hidden md:block" />
+                  日々小さな一歩を積み上げています。
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                  これからも、同じような境遇にいる誰かの希望となるようなコンテンツを発信し、私自身の学びも深めていきたいと思っています。
+                  これからも、同じような境遇にいる誰かの希望となるようなコンテンツを発信しつつ、
+                  <br className="hidden md:block" />
+                  私自身の学びも深めていきたいと思っています。
                 </p>
               </AnimatedSection>
             </div>
@@ -171,28 +198,68 @@ const HomePage: React.FC = () => {
 
         {/* Works Section */}
         <AnimatedSection animation="fadeUp" delay={300}>
-          <Section title="Works" id="works">
+          <Section title="制作実績" id="works">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {worksData.map((work, index) => (
-                <AnimatedSection 
+                <AnimatedSection
                   key={work.id}
-                  animation="fadeUp" 
-                  delay={400 + (index * 150)}
+                  animation="fadeUp"
+                  delay={400 + index * 150}
                 >
-                  <a href={work.link} target="_blank" rel="noopener noreferrer" className="block group">
-                    <Card>
+                  <a
+                    href={work.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block group"
+                    aria-label={`${work.title} - ${work.linkLabel}`}
+                  >
+                    <Card className="h-full">
                       <div className="overflow-hidden rounded-t-lg">
-                        <OptimizedImage 
-                          src={work.imageUrl} 
-                          alt={work.title} 
-                          width={600} 
+                        <OptimizedImage
+                          src={work.imageUrl}
+                          alt={work.title}
+                          width={600}
                           height={400}
-                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold mb-2 text-main-text dark:text-gray-100">{work.title}</h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm h-16">{work.description}</p>
+                      <div className="flex flex-col flex-1 p-6 space-y-4">
+                        <span className="inline-flex w-fit items-center rounded-full border border-accent-blue/20 bg-accent-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-accent-blue">
+                          {work.category}
+                        </span>
+                        <h3 className="text-xl font-bold text-main-text dark:text-gray-100">
+                          {work.title}
+                        </h3>
+                        <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                          {work.description}
+                        </p>
+                        <div className="mt-auto flex flex-wrap gap-2">
+                          {work.skills.map((skill) => (
+                            <span
+                              key={skill}
+                              className="rounded-full bg-accent-pink/15 px-3 py-1 text-xs font-semibold text-accent-pink"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-accent-blue transition-colors duration-300 group-hover:text-accent-pink">
+                          {work.linkLabel}
+                          <svg
+                            className="h-4 w-4"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 12h14M12 5l7 7-7 7"
+                            />
+                          </svg>
+                        </span>
                       </div>
                     </Card>
                   </a>
@@ -270,7 +337,9 @@ const HomePage: React.FC = () => {
             <AnimatedSection animation="scale" delay={700}>
               <div className="max-w-xl mx-auto text-center bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm p-8 rounded-lg shadow-inner">
                 <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
-                  お仕事のご相談・ご依頼など、お気軽にご連絡ください。
+                  日々の学習の様子はXで、よりカジュアルな音声配信はstand.fmで行っています。
+                  <br className="hidden md:block" />
+                  ブログも準備中です。フォローやDM、いつでも大歓迎です！
                 </p>
                 <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
                   メールまたはアイコンからお気軽にご連絡ください。

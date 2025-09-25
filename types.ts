@@ -55,3 +55,14 @@ export interface Post {
   viewCount?: number;
 }
 
+export interface Work {
+  id: number;
+  category: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  link: string;
+  linkLabel: string;
+  skills: string[];
+}
+
