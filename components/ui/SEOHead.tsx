@@ -17,8 +17,8 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   title = "Mohiro's Portfolio & Blog",
   description = "Mohiroのポートフォリオとブログサイト。Web開発、デザイン、技術についての記事を発信しています。",
   keywords = "portfolio, blog, web development, design, React, TypeScript, Next.js",
-  image = "/images/og-image.jpg",
-  url = "https://mohiro-portfolio.vercel.app",
+  image = "/images/ogp.jpg",
+  url = "https://mohiro.vercel.app",
   type = "website",
   publishedTime,
   modifiedTime,
@@ -26,8 +26,8 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   tags = []
 }) => {
   const fullTitle = title.includes("Mohiro") ? title : `${title} | Mohiro's Portfolio & Blog`;
-  const fullUrl = url.startsWith('http') ? url : `https://mohiro-portfolio.vercel.app${url}`;
-  const fullImage = image.startsWith('http') ? image : `https://mohiro-portfolio.vercel.app${image}`;
+  const fullUrl = url.startsWith('http') ? url : `https://mohiro.vercel.app${url}`;
+  const fullImage = image.startsWith('http') ? image : `https://mohiro.vercel.app${image}`;
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -45,12 +45,12 @@ const SEOHead: React.FC<SEOHeadProps> = ({
           "author": {
             "@type": "Person",
             "name": author,
-            "url": "https://mohiro-portfolio.vercel.app"
+            "url": "https://mohiro.vercel.app"
           },
           "publisher": {
             "@type": "Person",
             "name": "Mohiro",
-            "url": "https://mohiro-portfolio.vercel.app"
+            "url": "https://mohiro.vercel.app"
           },
           "keywords": tags.join(", "),
           "articleSection": "Technology"
@@ -69,9 +69,9 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       },
       {
         "@type": "Person",
-        "@id": "https://mohiro-portfolio.vercel.app/#person",
+        "@id": "https://mohiro.vercel.app/#person",
         "name": "Mohiro",
-        "url": "https://mohiro-portfolio.vercel.app",
+        "url": "https://mohiro.vercel.app",
         "sameAs": [
           "https://github.com/mohiro",
           "https://twitter.com/mohiro"

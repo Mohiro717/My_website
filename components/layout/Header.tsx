@@ -68,13 +68,13 @@ const Header: React.FC = () => {
   const navLinkClasses = ({ isActive }: { isActive: boolean }): string => {
     const isBlogSectionActive = isHomePage && activeSection === 'blog-section';
     return `block py-2 px-3 text-lg transition duration-300 ${
-      isActive || isBlogSectionActive ? 'text-accent-blue font-bold' : 'text-main-text dark:text-gray-100 hover:text-accent-pink'
+      isActive || isBlogSectionActive ? 'text-accent-blue font-bold' : 'text-main-text dark:text-gray-100 hover:text-[#9ecbff]'
     }`;
   };
 
   const anchorLinkClasses = (sectionId: string): string => {
     const isActive = isHomePage && activeSection === sectionId;
-    return `block py-2 px-3 text-lg transition duration-300 ${isActive ? 'text-accent-blue font-bold' : 'text-main-text dark:text-gray-100 hover:text-accent-pink'}`;
+    return `block py-2 px-3 text-lg transition duration-300 ${isActive ? 'text-accent-blue font-bold' : 'text-main-text dark:text-gray-100 hover:text-[#9ecbff]'}`;
   };
 
   return (
