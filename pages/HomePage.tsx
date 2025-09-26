@@ -130,10 +130,7 @@ const HomePage: React.FC = () => {
             <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.65)_0%,_rgba(255,255,255,0)_60%)]" />
 
             <div className="relative w-full">
-              <div className="pointer-events-none absolute -inset-[1.5px] -z-10 rounded-3xl bg-[conic-gradient(from_120deg_at_50%_50%,rgba(255,255,255,0.6),rgba(255,255,255,0)_150deg,rgba(255,255,255,0.6)_300deg,rgba(255,255,255,0)_360deg)] opacity-70 blur-xl animate-[spin_18s_linear_infinite]" />
-              <div className="relative overflow-hidden rounded-3xl border border-white/25 bg-white/15 p-10 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.45)] backdrop-blur-2xl dark:border-gray-700/60 dark:bg-gray-900/40 md:p-12 lg:px-16 lg:py-14">
-                <div className="pointer-events-none absolute inset-0 rounded-[inherit] border border-white/40 opacity-70" />
-                <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(115deg,rgba(255,255,255,0.55),rgba(255,255,255,0)_55%)] opacity-75" />
+              <div className="relative rounded-3xl p-10 md:p-12 lg:px-16 lg:py-14">
                 <div className="relative flex flex-col items-center gap-8 sm:flex-row sm:items-center sm:justify-between lg:gap-16">
                   <div className="flex-1 space-y-6 text-center sm:text-left">
                     <p className="inline-flex items-center justify-center rounded-full bg-white/20 px-5 py-1.5 text-xs font-semibold tracking-[0.35em] uppercase text-accent-blue backdrop-blur-lg dark:text-accent-pink lg:text-sm">
@@ -222,7 +219,7 @@ const HomePage: React.FC = () => {
           <div className="space-y-16">
             {/* About Section */}
             <AnimatedSection animation="fadeUp" delay={200}>
-              <Section title="About Me" id="about">
+              <Section title="About me" id="about">
                 <div className="mx-auto max-w-5xl text-center">
                   <AnimatedSection animation="scale" delay={600}>
                     <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
