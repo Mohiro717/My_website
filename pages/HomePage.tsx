@@ -123,7 +123,7 @@ const HomePage: React.FC = () => {
         <AnimatedSection animation="fadeUp" duration={0.8}>
           <section
             id="home"
-            className="relative mx-auto flex max-w-5xl flex-col items-center gap-10 px-6 py-16 text-center sm:py-20"
+            className="relative mx-auto flex max-w-6xl flex-col items-center gap-12 px-6 py-16 text-center md:px-10 lg:flex-row lg:items-stretch lg:gap-16 lg:px-14 lg:py-24"
           >
             <div className="pointer-events-none absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-accent-pink/25 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-16 right-1/4 h-72 w-72 rounded-full bg-accent-blue/25 blur-3xl" />
@@ -131,28 +131,28 @@ const HomePage: React.FC = () => {
 
             <div className="relative w-full">
               <div className="pointer-events-none absolute -inset-[1.5px] -z-10 rounded-3xl bg-[conic-gradient(from_120deg_at_50%_50%,rgba(255,255,255,0.6),rgba(255,255,255,0)_150deg,rgba(255,255,255,0.6)_300deg,rgba(255,255,255,0)_360deg)] opacity-70 blur-xl animate-[spin_18s_linear_infinite]" />
-              <div className="relative overflow-hidden rounded-3xl border border-white/25 bg-white/15 p-12 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.45)] backdrop-blur-2xl dark:border-gray-700/60 dark:bg-gray-900/40">
+              <div className="relative overflow-hidden rounded-3xl border border-white/25 bg-white/15 p-10 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.45)] backdrop-blur-2xl dark:border-gray-700/60 dark:bg-gray-900/40 md:p-12 lg:px-16 lg:py-14">
                 <div className="pointer-events-none absolute inset-0 rounded-[inherit] border border-white/40 opacity-70" />
                 <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(115deg,rgba(255,255,255,0.55),rgba(255,255,255,0)_55%)] opacity-75" />
-                <div className="relative flex flex-col items-center gap-8 sm:flex-row sm:items-center sm:justify-between">
+                <div className="relative flex flex-col items-center gap-8 sm:flex-row sm:items-center sm:justify-between lg:gap-16">
                   <div className="flex-1 space-y-6 text-center sm:text-left">
-                    <p className="inline-flex items-center justify-center rounded-full bg-white/20 px-4 py-1 text-xs font-semibold tracking-[0.3em] uppercase text-accent-blue backdrop-blur-lg dark:text-accent-pink">
+                    <p className="inline-flex items-center justify-center rounded-full bg-white/20 px-5 py-1.5 text-xs font-semibold tracking-[0.35em] uppercase text-accent-blue backdrop-blur-lg dark:text-accent-pink lg:text-sm">
                       Craft & Challenge
                     </p>
-                    <h1 className="text-4xl font-extrabold leading-tight text-main-text dark:text-gray-100 md:text-6xl">
+                    <h1 className="text-4xl font-extrabold leading-tight text-main-text dark:text-gray-100 sm:text-5xl lg:text-6xl xl:text-7xl">
                       Welcome to My Creative Space
                     </h1>
-                    <p className="text-base text-gray-600 dark:text-gray-300 md:text-lg">
+                    <p className="text-base text-gray-600 dark:text-gray-300 md:text-lg lg:text-xl lg:leading-relaxed">
                       I'm Mohiro, a developer and storyteller exploring UEFN, Verse, and web experiences.
                       <br />
                       家族と共に歩む挑戦の記録を、この場所から発信しています。
                     </p>
-                  <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-start">
+                  <div className="mt-12 flex flex-col items-center gap-5 sm:flex-row sm:items-center sm:justify-start">
                     <Link
                       to="/#works"
-                      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#f7d0ef] via-[#fbe4d4] to-[#cde6ff] px-8 py-3 text-sm font-semibold text-main-text shadow-[0_18px_40px_-22px_rgba(236,72,153,0.7)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_45px_-20px_rgba(236,72,153,0.55)]"
+                      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#f7d0ef] via-[#fbe4d4] to-[#cde6ff] px-10 py-4 text-base font-semibold text-main-text shadow-[0_18px_40px_-22px_rgba(236,72,153,0.7)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_45px_-20px_rgba(236,72,153,0.55)]"
                     >
-                      制作実績をみる
+                      Works
                       <svg
                         className="h-4 w-4"
                         fill="none"
@@ -167,9 +167,9 @@ const HomePage: React.FC = () => {
                     </Link>
                     <Link
                       to="/blog"
-                      className="inline-flex items-center gap-2 rounded-full border border-white/50 bg-white/10 px-7 py-3 text-sm font-semibold text-accent-blue backdrop-blur-lg transition duration-300 hover:-translate-y-0.5 hover:bg-white/25 dark:text-accent-pink"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/50 bg-white/10 px-9 py-3.5 text-base font-semibold text-accent-blue backdrop-blur-lg transition duration-300 hover:-translate-y-0.5 hover:bg-white/25 dark:text-accent-pink"
                     >
-                      ブログを読む
+                      Blog
                       <svg
                         className="h-4 w-4"
                         fill="none"
@@ -185,19 +185,9 @@ const HomePage: React.FC = () => {
                   </div>
                 </div>
                 <div className="relative hidden flex-1 items-center justify-center sm:flex">
-                  <div className="absolute -left-12 top-6 h-44 w-6 rounded-full bg-gradient-to-b from-pink-200/50 via-transparent to-blue-200/50 blur-2xl" />
-                  <div className="relative h-64 w-64">
-                    <div className="absolute -left-10 bottom-8 h-40 w-28 -rotate-6 overflow-hidden rounded-[1.75rem] border border-white/30 bg-white/20 shadow-[0_20px_35px_-20px_rgba(15,23,42,0.45)] backdrop-blur-xl">
-                      <img
-                        src="/images/portfolio-screenshot.jpg"
-                        alt="Web project screenshot"
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                    <div className="relative h-64 w-64 rotate-3 overflow-hidden rounded-[2.5rem] border border-white/35 bg-gradient-to-br from-white/30 via-white/10 to-transparent shadow-[0_30px_55px_-28px_rgba(14,23,42,0.55)] backdrop-blur-2xl">
-                      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.45),rgba(255,255,255,0)_60%)] opacity-80" />
+                  <div className="absolute -left-16 top-4 h-48 w-8 rounded-full bg-gradient-to-b from-pink-200/50 via-transparent to-blue-200/50 blur-3xl" />
+                  <div className="relative flex h-72 w-72 items-center justify-center sm:h-80 sm:w-80 lg:translate-x-4">
+                    <div className="absolute -left-9 bottom-0 h-32 w-28 -rotate-[16deg] overflow-hidden rounded-[1.6rem] border border-white/30 bg-white/20 shadow-[0_30px_46px_-20px_rgba(15,23,42,0.5)] backdrop-blur-xl z-10 sm:h-36 sm:w-32">
                       <img
                         src="/images/portfolio-uefn.jpg"
                         alt="Mohiro's UEFN creation"
@@ -206,9 +196,19 @@ const HomePage: React.FC = () => {
                         decoding="async"
                       />
                     </div>
-                    <div className="absolute -right-10 -bottom-6 flex h-28 w-28 flex-col items-center justify-center gap-1 rounded-full border border-white/50 bg-white/25 text-xs font-semibold uppercase tracking-[0.3em] text-accent-blue backdrop-blur-2xl shadow-[0_18px_35px_-22px_rgba(14,23,42,0.55)] dark:text-accent-pink">
+                    <div className="relative h-64 w-64 rotate-[4deg] overflow-hidden rounded-[2.6rem] border border-white/35 bg-gradient-to-br from-white/35 via-white/15 to-transparent shadow-[0_40px_70px_-28px_rgba(14,23,42,0.6)] backdrop-blur-2xl z-20 sm:h-72 sm:w-72 lg:h-[19rem] lg:w-[22rem] lg:rotate-[6deg]">
+                      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.58),rgba(255,255,255,0)_62%)] opacity-92" />
+                      <img
+                        src="/images/portfolio-screenshot.jpg"
+                        alt="Web project screenshot"
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="absolute -right-10 -bottom-6 z-30 flex h-28 w-28 flex-col items-center justify-center gap-1 rounded-full border border-white/50 bg-white/25 text-xs font-semibold uppercase tracking-[0.3em] text-accent-blue backdrop-blur-2xl shadow-[0_18px_35px_-22px_rgba(14,23,42,0.55)] dark:text-accent-pink">
                       <span className="text-sm">UEFN</span>
-                      <span className="text-sm tracking-[0.08em] text-main-text dark:text-gray-100">Verse</span>
+                      <span className="text-sm tracking-[0.08em] text-main-text dark:text-gray-100">Website</span>
                     </div>
                   </div>
                 </div>
